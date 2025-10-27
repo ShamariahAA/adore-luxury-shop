@@ -1,0 +1,107 @@
+export default function Home() {
+  return (
+    <div>
+      {/* Header */}
+      <header className="container">
+        <div className="logo">Adoře Luxury</div>
+        <nav>
+          <a href="#">Home</a>
+          <a href="#shop">Shop</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#" onClick={() => alert('Cart opened!')}>Cart 🛒</a>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="hero">
+        <h1>Adoře Luxury</h1>
+        <p className="tagline">Elegance in Every Sleep</p>
+        <button
+          className="btn-primary"
+          onClick={() =>
+            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })
+          }
+        >
+          Shop Now
+        </button>
+      </section>
+
+      {/* Shop Section */}
+      <section className="shop" id="shop">
+        <h2>Our Plush Bonnets</h2>
+        <div className="products-grid">
+          {/* Product Card 1 */}
+          <div className="product-card">
+            <img
+              src="https://i.imgur.com/KltnFse.png"
+              alt="Caramel Fluffy Bonnet"
+              className="product-image"
+            />
+            <div className="product-name">Caramel Fluffy Bonnet</div>
+            <div className="product-desc">
+              Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.
+            </div>
+            <div className="product-price">$45.00</div>
+            <button
+              className="btn-add-cart"
+              onClick={() => alert('Added Caramel Fluffy Bonnet')}
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          {/* Product Card 2 */}
+          <div className="product-card">
+            <img
+              src="https://i.imgur.com/JNlHbsX.png"
+              alt="Cheetah Fluffy Bonnet"
+              className="product-image"
+            />
+            <div className="product-name">Cheetah Fluffy Bonnet</div>
+            <div className="product-desc">
+              Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.
+            </div>
+            <div className="product-price">$45.00</div>
+            <button
+              className="btn-add-cart"
+              onClick={() => alert('Added Cheetah Fluffy Bonnet')}
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          {/* Product Card 3 */}
+          <div className="product-card">
+            <img
+              src="https://i.imgur.com/fD3yd6E.png"
+              alt="Hello Kitty Fluffy Bonnet"
+              className="product-image"
+            />
+            <div className="product-name">Hello Kitty Fluffy Bonnet</div>
+            <div className="product-desc">
+              Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.
+            </div>
+            <div className="product-price">$45.00</div>
+            <button
+              className="btn-add-cart"
+              onClick={() => alert('Added Hello Kitty Fluffy Bonnet')}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer>
+        <div className="social-icons">
+          <a href="#">FB</a>
+          <a href="#">IG</a>
+          <a href="#">TW</a>
+        </div>
+        <p>© 2025 Adoře Luxury Shop</p>
+      </footer>
+    </div>
+  );
+}
