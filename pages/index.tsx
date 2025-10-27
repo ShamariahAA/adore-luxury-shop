@@ -1,38 +1,16 @@
-import { useCart } from "../context/CartContext";
-import { CartSidebar } from "../components/CartSidebar";
+// pages/index.tsx
+import { useCart } from '../context/CartContext';
+import { CartSidebar } from '../components/CartSidebar';
 
 interface Product {
   name: string;
   price: number;
-  desc: string;
-  image: string;
 }
 
 const products: Product[] = [
-  {
-    name: "Cheetah Fluffy Bonnet",
-    price: 25, // updated price
-    desc: "Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.",
-    image: "https://i.postimg.cc/Wqd51Kwp/caramel.jpg",
-  },
-  {
-    name: "Caramel Fluffy Bonnet",
-    price: 45,
-    desc: "Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.",
-    image: "https://i.postimg.cc/JGbb5Mnq/blackcat.jpg",
-  },
-  {
-    name: "Hello Kitty Fluffy Bonnet",
-    price: 45,
-    desc: "Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.",
-    image: "https://i.postimg.cc/56Hr4Hs6/cheetah.jpg",
-  },
-  {
-    name: "Black Cat Fluffy Bonnet",
-    price: 45,
-    desc: "Mysterious and cozy. Soft black plush with silky lining for an elegant nighttime look.",
-    image: "https://i.postimg.cc/y3R05zyb/hellokitty.jpg",
-  },
+  { name: 'Luxury Bag', price: 250 },
+  { name: 'Designer Shoes', price: 180 },
+  { name: 'Silk Scarf', price: 90 },
 ];
 
 export default function Home() {
@@ -42,41 +20,49 @@ export default function Home() {
     <>
       <CartSidebar />
 
-      <section className="hero" style={{ textAlign: "center", padding: "2rem 1rem" }}>
-        <h1>Adoře Luxury</h1>
-        <p className="tagline">Elegance in Every Sleep</p>
-        <button
-          className="btn-primary"
-          onClick={() =>
-            document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" })
-          }
-        >
-          Shop Now
-        </button>
-      </section>
+      <main style={{ padding: '2rem', fontFamily: 'serif' }}>
+        <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Adoře Luxury Shop</h1>
 
-      <section className="shop" id="shop" style={{ padding: "2rem" }}>
-        <h2>Our Plush Bonnets</h2>
-        <div className="products-grid" style={{ display: "grid", gap: "2rem", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1.5rem',
+          }}
+        >
           {products.map((product) => (
             <div
               key={product.name}
-              className="product-card"
               style={{
-                border: "1px solid #e4d9cc",
-                borderRadius: "10px",
-                padding: "1rem",
-                textAlign: "center",
-                fontFamily: "serif",
+                border: '1px solid #C69C6D',
+                padding: '1rem',
+                borderRadius: '10px',
+                textAlign: 'center',
               }}
             >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="product-image"
-                style={{ width: "100%", borderRadius: "10px", marginBottom: "1rem" }}
-              />
-              <div className="product-name" style={{ fontWeight: 700, marginBottom: "0.5rem" }}>
-                {product.name}
-              </div>
+              <h2 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>{product.name}</h2>
+              <p style={{ marginBottom: '1rem' }}>${product.price.toFixed(2)}</p>
+              <button
+                onClick={() => addToCart(product)}
+                style={{
+                  backgroundColor: '#000',
+                  color: '#C69C6D',
+                  border: '2px solid #C69C6D',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '30px',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
+  );
+}
+
+
 
