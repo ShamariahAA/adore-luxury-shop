@@ -1,59 +1,55 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export interface Product {
+interface CartItem {
   name: string;
   price: number;
-  desc: string;
   image: string;
-}
-
-export interface CartItem extends Product {
   quantity: number;
 }
 
 interface CartContextType {
-  cart: CartItem[];
+  cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (name: string) => void;
   clearCart: () => void;
-  total: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const addToCart = (item: CartItem) => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.name === item.name);
-      if (existing) {
+    setCartItems((prev) => {
+      const existingItem = prev.find((i) => i.name === item.name);
+      if (existingItem) {
         return prev.map((i) =>
-          i.name === item.name ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.name === item.name ? { ...i, quantity: i.quantity + 1 } : i
         );
-      } else {
-        return [...prev, item];
       }
+      return [...prev, { ...item, quantity: 1 }];
     });
   };
 
   const removeFromCart = (name: string) => {
-    setCart((prev) => prev.filter((item) => item.name !== name));
+    setCartItems((prev) => prev.filter((item) => item.name !== name));
   };
 
-  const clearCart = () => setCart([]);
-
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const clearCart = () => {
+    setCartItems([]);
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, total }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-export const useCart = () => {
+export const useCart = (): CartContextType => {
   const context = useContext(CartContext);
-  if (!context) throw new Error('useCart must be used within a CartProvider');
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
   return context;
 };
