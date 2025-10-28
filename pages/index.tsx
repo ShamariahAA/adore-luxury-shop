@@ -1,94 +1,77 @@
-// pages/index.tsx
-import { useCart } from "../context/CartContext";
-import { CartSidebar } from "../components/CartSidebar";
+import { useCart } from '../context/CartContext';
+import { CartSidebar } from '../components/CartSidebar';
+import { useState } from 'react';
 
-type Product = {
+interface Product {
   name: string;
   price: number;
-  image: string; // make sure your product has an image URL
-};
-
-type CartItem = Product & {
-  quantity: number;
-};
+  desc: string;
+  image: string;
+}
 
 const products: Product[] = [
-  { name: "Luxury Bag", price: 299.99, image: "/images/bag.jpg" },
-  { name: "Silk Scarf", price: 149.99, image: "/images/scarf.jpg" },
-  { name: "Gold Earrings", price: 99.99, image: "/images/earrings.jpg" },
+  {
+    name: 'Cheetah Fluffy Bonnet',
+    price: 25,
+    desc: 'Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.',
+    image: 'https://i.postimg.cc/Wqd51Kwp/caramel.jpg', // update with correct image
+  },
+  {
+    name: 'Caramel Fluffy Bonnet',
+    price: 25,
+    desc: 'Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.',
+    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg', // update with correct image
+  },
+  {
+    name: 'Hello Kitty Fluffy Bonnet',
+    price: 25,
+    desc: 'Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.',
+    image: 'https://i.postimg.cc/y3R05zyb/hellokitty.jpg',
+  },
+  {
+    name: 'Black Cat Fluffy Bonnet',
+    price: 25,
+    desc: 'Mysterious and cozy. Soft black plush with silky lining for an elegant nighttime look.',
+    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg',
+  },
 ];
 
 export default function Home() {
   const { addToCart } = useCart();
 
   return (
-    <>
+    <div>
       <CartSidebar />
-      <main style={{ padding: "2rem", fontFamily: "serif" }}>
-        <h2 style={{ fontWeight: 700, fontSize: "2rem", marginBottom: "1.5rem" }}>
-          Shop Our Collection
-        </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: "2rem",
-          }}
-        >
+      <header className="container">
+        <div className="logo">Adoře Luxury</div>
+        <nav>
+          <a href="#">Home</a>
+          <a href="#shop">Shop</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <section className="shop" id="shop">
+        <h2>Our Plush Bonnets</h2>
+        <div className="products-grid">
           {products.map((product) => (
-            <div
-              key={product.name}
-              style={{
-                border: "1px solid #e4d9cc",
-                borderRadius: "10px",
-                padding: "1rem",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                style={{
-                  width: "100%",
-                  height: "150px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                  marginBottom: "0.5rem",
-                }}
-              />
-              <h3 style={{ fontWeight: 600 }}>{product.name}</h3>
-              <p style={{ margin: "0.5rem 0", fontWeight: 700 }}>
-                ${product.price.toFixed(2)}
-              </p>
+            <div className="product-card" key={product.name}>
+              <img src={product.image} alt={product.name} className="product-image" />
+              <div className="product-name">{product.name}</div>
+              <div className="product-desc">{product.desc}</div>
+              <div className="product-price">${product.price}</div>
               <button
-                onClick={() =>
-                  addToCart({
-                    ...product,
-                    quantity: 1, // default quantity
-                  } as CartItem)
-                }
-                style={{
-                  backgroundColor: "#000",
-                  color: "#C69C6D",
-                  border: "2px solid #C69C6D",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "30px",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                className="btn-add-cart"
+                onClick={() => addToCart({ ...product, quantity: 1 })}
               >
                 Add to Cart
               </button>
             </div>
           ))}
         </div>
-      </main>
-    </>
+      </section>
+    </div>
   );
 }
-
-
-
-
-
