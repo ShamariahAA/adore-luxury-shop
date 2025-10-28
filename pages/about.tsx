@@ -1,9 +1,16 @@
-export default function About() {
+// pages/about.tsx
+import React from "react";
+
+const About: React.FC = () => {
   return (
-    <div style={{ padding: '2rem', fontFamily: 'serif' }}>
+    <div style={{ padding: "2rem", fontFamily: "Georgia, serif" }}>
       <h1>About Us</h1>
-      <p>Welcome to Adoře Luxury. We specialize in plush bonnets for your comfort and style.</p>
+      <p>Adoře Luxury specializes in plush bonnets and high-quality luxury accessories.</p>
+      <p>Our mission is to bring elegance and comfort to your everyday life.</p>
     </div>
   );
-}
+};
+
+export default About;
+
 
