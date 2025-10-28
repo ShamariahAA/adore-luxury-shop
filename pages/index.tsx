@@ -24,13 +24,18 @@ export default function Home() {
   return (
     <>
       <CartSidebar />
-
       <main style={{ padding: "2rem", fontFamily: "serif" }}>
         <h2 style={{ fontWeight: 700, fontSize: "2rem", marginBottom: "1.5rem" }}>
           Shop Our Collection
         </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "2rem" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+            gap: "2rem",
+          }}
+        >
           {products.map((product) => (
             <div
               key={product.name}
@@ -44,10 +49,18 @@ export default function Home() {
               <img
                 src={product.image}
                 alt={product.name}
-                style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px", marginBottom: "0.5rem" }}
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  marginBottom: "0.5rem",
+                }}
               />
               <h3 style={{ fontWeight: 600 }}>{product.name}</h3>
-              <p style={{ margin: "0.5rem 0", fontWeight: 700 }}>${product.price.toFixed(2)}</p>
+              <p style={{ margin: "0.5rem 0", fontWeight: 700 }}>
+                ${product.price.toFixed(2)}
+              </p>
               <button
                 onClick={() =>
                   addToCart({
@@ -70,7 +83,11 @@ export default function Home() {
             </div>
           ))}
         </div>
-      <
+      </main>
+    </>
+  );
+}
+
 
 
 
