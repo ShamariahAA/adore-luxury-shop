@@ -1,6 +1,6 @@
+// pages/index.tsx
 import { useCart } from '../context/CartContext';
 import { CartSidebar } from '../components/CartSidebar';
-import { useState } from 'react';
 
 interface Product {
   name: string;
@@ -9,18 +9,22 @@ interface Product {
   image: string;
 }
 
+interface CartItem extends Product {
+  quantity: number;
+}
+
 const products: Product[] = [
   {
     name: 'Cheetah Fluffy Bonnet',
     price: 25,
     desc: 'Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.',
-    image: 'https://i.postimg.cc/Wqd51Kwp/caramel.jpg', // update with correct image
+    image: 'https://i.postimg.cc/Wqd51Kwp/caramel.jpg',
   },
   {
     name: 'Caramel Fluffy Bonnet',
     price: 25,
     desc: 'Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.',
-    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg', // update with correct image
+    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg',
   },
   {
     name: 'Hello Kitty Fluffy Bonnet',
@@ -64,7 +68,9 @@ export default function Home() {
               <div className="product-price">${product.price}</div>
               <button
                 className="btn-add-cart"
-                onClick={() => addToCart({ ...product, quantity: 1 })}
+                onClick={() =>
+                  addToCart({ ...product, quantity: 1 } as CartItem)
+                }
               >
                 Add to Cart
               </button>
