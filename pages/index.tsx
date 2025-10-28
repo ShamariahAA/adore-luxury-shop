@@ -9,34 +9,30 @@ interface Product {
   image: string;
 }
 
-interface CartItem extends Product {
-  quantity: number;
-}
-
 const products: Product[] = [
   {
     name: 'Cheetah Fluffy Bonnet',
     price: 25,
-    desc: 'Fierce meets feminine. Bold cheetah print with soft pink satin interior.',
-    image: 'https://i.postimg.cc/Wqd51Kwp/cheetah.jpg',
+    desc: 'Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.',
+    image: 'https://i.postimg.cc/Wqd51Kwp/caramel.jpg',
   },
   {
     name: 'Caramel Fluffy Bonnet',
     price: 25,
-    desc: 'Wrap yourself in warmth and grace. Plush caramel teddy texture.',
-    image: 'https://i.postimg.cc/JGbb5Mnq/caramel.jpg',
+    desc: 'Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.',
+    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg',
   },
   {
     name: 'Hello Kitty Fluffy Bonnet',
     price: 25,
-    desc: 'Playful elegance, redefined. Snow-white plush with radiant red satin.',
-    image: 'https://i.postimg.cc/y3R05zyb/hellokitty.jpg',
+    desc: 'Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.',
+    image: 'https://i.postimg.cc/8z3c3DkF/blackcat-bonnet.jpg',
   },
   {
     name: 'Black Cat Fluffy Bonnet',
     price: 25,
-    desc: 'Mysterious and cozy. Soft black plush with silky lining.',
-    image: 'https://i.postimg.cc/JGbb5Mnq/blackcat.jpg',
+    desc: 'Mysterious and cozy. Soft black plush with silky lining for an elegant nighttime look.',
+    image: 'https://i.postimg.cc/y3R05zyb/hellokitty.jpg',
   },
 ];
 
@@ -45,6 +41,7 @@ export default function Home() {
 
   return (
     <div>
+      {/* Sidebar Cart */}
       <CartSidebar />
 
       {/* Single Header */}
@@ -64,17 +61,13 @@ export default function Home() {
         <div className="products-grid">
           {products.map((product) => (
             <div className="product-card" key={product.name}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="product-image"
-              />
+              <img src={product.image} alt={product.name} className="product-image" />
               <div className="product-name">{product.name}</div>
               <div className="product-desc">{product.desc}</div>
               <div className="product-price">${product.price}</div>
               <button
                 className="btn-add-cart"
-                onClick={() => addToCart({ ...product, quantity: 1 } as CartItem)}
+                onClick={() => addToCart({ ...product, quantity: 1 })}
               >
                 Add to Cart
               </button>
