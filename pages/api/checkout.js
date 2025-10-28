@@ -1,3 +1,4 @@
+// pages/api/checkout.js
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -7,15 +8,15 @@ export default async function handler(req, res) {
     try {
       const { items } = req.body;
 
-      // Transform items into Stripe line items
+      // Convert items to Stripe line items
       const line_items = items.map(item => ({
         price_data: {
           currency: "usd",
           product_data: {
             name: item.name,
-            images: [item.image], // optional, but good for checkout page
+            images: [item.image], // optional but recommended
           },
-          unit_amount: item.price * 100, // Stripe expects cents
+          unit_amount: item.price * 100, // amount in cents
         },
         quantity: item.quantity,
       }));
@@ -30,11 +31,12 @@ export default async function handler(req, res) {
 
       res.status(200).json({ url: session.url });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Something went wrong creating the checkout session" });
+      console.error("Checkout error:", err);
+      res.status(500).json({ error: "Checkout failed" });
     }
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
 }
+
