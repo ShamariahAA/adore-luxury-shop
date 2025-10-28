@@ -26,13 +26,13 @@ const products: Product[] = [
     name: 'Hello Kitty Fluffy Bonnet',
     price: 25,
     desc: 'Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.',
-    image: 'https://i.postimg.cc/8z3c3DkF/blackcat-bonnet.jpg',
+    image: 'https://i.postimg.cc/y3R05zyb/hellokitty.jpg',
   },
   {
     name: 'Black Cat Fluffy Bonnet',
     price: 25,
     desc: 'Mysterious and cozy. Soft black plush with silky lining for an elegant nighttime look.',
-    image: 'https://i.postimg.cc/y3R05zyb/hellokitty.jpg',
+    image: 'https://i.postimg.cc/0NwLMB7v/blackcat2.jpg', // switched URL
   },
 ];
 
@@ -41,19 +41,22 @@ export default function Home() {
 
   return (
     <div>
-      {/* Sidebar Cart */}
-      <CartSidebar />
-
       {/* Single Header */}
       <header className="container">
         <div className="logo">Adoře Luxury</div>
         <nav>
-          <a href="#">Home</a>
+          <a href="#hero">Home</a>
           <a href="#shop">Shop</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
+
+      {/* Hero Section */}
+      <section className="hero" id="hero">
+        <h1>Adoře Luxury Bonnets</h1>
+        <p className="tagline">Elegant. Cozy. Chic.</p>
+      </section>
 
       {/* Shop Section */}
       <section className="shop" id="shop">
@@ -75,6 +78,28 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* About Section */}
+      <section id="about" style={{ padding: '5rem 1rem', textAlign: 'center' }}>
+        <h2>About Us</h2>
+        <p>
+          At Adoře Luxury, we craft the coziest and most elegant bonnets for your nighttime comfort.
+        </p>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" style={{ padding: '5rem 1rem', textAlign: 'center' }}>
+        <h2>Contact Us</h2>
+        <p>Email: info@adoreluxury.com</p>
+      </section>
+
+      {/* Cart Sidebar */}
+      <CartSidebar />
+
+      {/* Footer */}
+      <footer>
+        &copy; {new Date().getFullYear()} Adoře Luxury. All rights reserved.
+      </footer>
     </div>
   );
 }
