@@ -1,33 +1,25 @@
-import { Header } from '../components/Header';
-import { useState } from 'react';
-import emailjs from 'emailjs-com';
+import type { NextApiRequest, NextApiResponse } from "next";
+import emailjs from "@emailjs/browser";
 
-export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState('');
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('sending');
+  const { name, email, message } = req.body;
 
-    emailjs
-      .send(
-        'service_ajgbzqr',          // 🔹 Replace this with your EmailJS Service ID (e.g. service_g6hy43p)
-        'template_rb1gaff',        // ✅ Your Template ID
-        formData,
-        'tF6RXKQCoerDYVvr3'        // ✅ Your Public Key
-      )
-      .then(
-        () => {
-          setStatus('sent');
-          setFormData({ name: '', email: '', message: '' });
-        },
-        (error) => {
-          console.error('FAILED...', error);
-          setStatus('error');
-        }
-      );
-  };
+  try {
+    const response = await emailjs.send(
+      "service_xxxxxxx", // replace with your EmailJS service ID
+      "template_rb1gaff", // your template ID
+      {
+        name,
+        email,
+        message,
+        to_email: "adoreluxuryshop@gmail.com",
+      },
+      "t
+
 
   return (
     <div>
