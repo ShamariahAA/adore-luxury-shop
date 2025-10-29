@@ -29,11 +29,12 @@ export const Header = () => {
         </div>
 
         <nav>
-          <a href="/" style={{ margin: '0 1rem', color: '#C69C6D' }}>Home</a>
-          <a href="#shop" style={{ margin: '0 1rem', color: '#C69C6D' }}>Shop</a>
-          <a href="/about" style={{ margin: '0 1rem', color: '#C69C6D' }}>About</a>
-          <a href="/contact" style={{ margin: '0 1rem', color: '#C69C6D' }}>Contact</a>
-        </nav>
+  <a href="/">Home</a>
+  <a href="/shop">Shop</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+</nav>
+
       </header>
 
       {/* Floating Cart Button */}
