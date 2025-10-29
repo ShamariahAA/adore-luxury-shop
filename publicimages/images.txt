@@ -1,0 +1,4 @@
+public/images/hello-kitty.jpg
+public/images/cheetah.jpg
+public/images/black-cat.jpg
+public/images/caramel.jpg

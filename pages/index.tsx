@@ -1,37 +1,37 @@
 import { useCart } from '../context/CartContext';
-import { CartSidebar } from '../components/CartSidebar';
+import { Header } from '../components/Header';
 
-interface Product {
+type Product = {
   name: string;
   price: number;
   desc: string;
-  image: string;
-}
+  image: string; // path under /public
+};
 
 const products: Product[] = [
   {
     name: 'Cheetah Fluffy Bonnet',
     price: 25,
     desc: 'Fierce meets feminine. Bold cheetah print with soft pink satin interior for glamour and comfort.',
-    image: 'https://i.postimg.cc/b1e19f78-998a-48cd-8135-902a915ac2ae.jpg', // Leopard print
+    image: '/images/cheetah.jpg',
   },
   {
     name: 'Caramel Fluffy Bonnet',
     price: 25,
     desc: 'Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.',
-    image: 'https://i.postimg.cc/b753ee65-5721-4e12-99a4-997c878b3d2d.jpg', // Brown teddy
+    image: '/images/caramel.jpg',
   },
   {
     name: 'Hello Kitty Fluffy Bonnet',
     price: 25,
     desc: 'Playful elegance, redefined. Snow-white plush with radiant red satin, cute yet refined charm.',
-    image: 'https://i.postimg.cc/53fcb892-3bf3-4d51-8349-e72012eb8c84.jpg', // Pink/red interior
+    image: '/images/hello-kitty.jpg',
   },
   {
     name: 'Black Cat Fluffy Bonnet',
     price: 25,
     desc: 'Mysterious and cozy. Soft black plush with silky lilac lining for an elegant nighttime look.',
-    image: 'https://i.postimg.cc/4886a80b-8c46-4fa6-b6a3-347fe354f8df.jpg', // Black bonnet
+    image: '/images/black-cat.jpg',
   },
 ];
 
@@ -40,28 +40,76 @@ export default function Home() {
 
   return (
     <div>
-      <header className="container">
-        <div className="logo">Adoře Luxury</div>
-        <nav>
-          <a href="#">Home</a>
-          <a href="#shop">Shop</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </header>
+      {/* Site-wide header with cart counter + floating cart button */}
+      <Header />
 
-      <section className="shop" id="shop">
-        <h2>Our Plush Bonnets</h2>
-        <div className="products-grid">
-          {products.map((product) => (
-            <div className="product-card" key={product.name}>
-              <img src={product.image} alt={product.name} className="product-image" />
-              <div className="product-name">{product.name}</div>
-              <div className="product-desc">{product.desc}</div>
-              <div className="product-price">${product.price}</div>
+      <section className="shop" id="shop" style={{ backgroundColor: '#F9F4E7', padding: '3rem 0 5rem' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '2.2rem', marginBottom: '2rem', fontWeight: 700 }}>
+          Our Plush Bonnets
+        </h2>
+
+        <div
+          className="products-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '2rem',
+            width: '90%',
+            maxWidth: '1100px',
+            margin: '0 auto',
+          }}
+        >
+          {products.map((p) => (
+            <div
+              key={p.name}
+              className="product-card"
+              style={{
+                background: '#fff',
+                borderRadius: 8,
+                boxShadow: '0 8px 15px rgb(0 0 0 / 0.1)',
+                padding: '1rem 1rem 1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                src={p.image}
+                alt={p.name}
+                className="product-image"
+                style={{
+                  width: '100%',
+                  maxWidth: 320,
+                  height: 260,
+                  objectFit: 'cover',
+                  borderRadius: 8,
+                }}
+              />
+              <div className="product-name" style={{ fontWeight: 900, fontSize: '1.15rem', marginTop: '0.8rem' }}>
+                {p.name}
+              </div>
+              <div
+                className="product-desc"
+                style={{ fontStyle: 'italic', color: '#8B7D5C', fontSize: '0.95rem', textAlign: 'center', margin: '0.4rem 0 0.9rem' }}
+              >
+                {p.desc}
+              </div>
+              <div className="product-price" style={{ fontWeight: 700, color: '#C69C6D', marginBottom: '0.8rem' }}>
+                ${p.price.toFixed(2)}
+              </div>
+
               <button
                 className="btn-add-cart"
-                onClick={() => addToCart({ ...product, quantity: 1 })}
+                onClick={() => addToCart({ name: p.name, price: p.price, image: p.image, quantity: 1 })}
+                style={{
+                  backgroundColor: '#000',
+                  color: '#C69C6D',
+                  border: '2px solid #C69C6D',
+                  padding: '0.6rem 1.2rem',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
               >
                 Add to Cart
               </button>
@@ -69,8 +117,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      <CartSidebar />
     </div>
   );
 }
