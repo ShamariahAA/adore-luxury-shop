@@ -10,21 +10,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const response = await emailjs.send(
-      "service_xxxxxxx", // Replace with your actual EmailJS service ID
-      "template_rb1gaff", // Your EmailJS template ID
+      "service_xxxxxxx", // your EmailJS service ID
+      "template_rb1gaff", // your template ID
       {
         name,
         email,
         message,
         to_email: "adoreluxuryshop@gmail.com",
       },
-      "tF6RXKQCoerDYVvr3" // Your EmailJS public key
+      "tF6RXKQCoerDYVvr3" // your public key
     );
 
-    res.status(200).json({ success: true, response });
+    return res.status(200).json({ success: true, response });
   } catch (error) {
-    console.error("EmailJS error:", error);
-    res.status(500).json({ error: "Failed to send email" });
+    console.error("Email sending failed:", error);
+    return res.status(500).json({ error: "Failed to send email" });
   }
 }
+
 
