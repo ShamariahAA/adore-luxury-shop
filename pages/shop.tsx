@@ -1,5 +1,4 @@
 import { useCart } from "../context/CartContext";
-import { CartSidebar } from "../components/CartSidebar";
 import { Header } from "../components/Header";
 import { useState } from "react";
 
@@ -44,16 +43,12 @@ export default function Shop() {
   const handleAddToCart = (product: Product) => {
     addToCart({ ...product, quantity: 1 });
     setClickedItem(product.name);
-    setTimeout(() => setClickedItem(null), 600); // remove bounce after 0.6s
+    setTimeout(() => setClickedItem(null), 600);
   };
 
   return (
     <div>
       <Header />
-      {/* ✅ Moved Cart button down slightly so it doesn't overlap content */}
-      <div style={{ position: "relative", zIndex: 200 }}>
-        <CartSidebar />
-      </div>
 
       <section className="shop" style={{ padding: "2rem", marginTop: "2rem" }}>
         <h2
@@ -66,9 +61,9 @@ export default function Shop() {
             letterSpacing: "1px",
           }}
         >
-          <h2>Adoře Plush Bonnets</h2>
-
+          Adoře Plush Bonnets
         </h2>
+
         <p style={{ textAlign: "center", color: "#555", marginBottom: "2rem" }}>
           Luxury handmade bonnets designed for elegance, comfort, and care.
         </p>
@@ -151,5 +146,6 @@ export default function Shop() {
     </div>
   );
 }
+
 
 
