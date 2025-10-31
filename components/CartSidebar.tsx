@@ -22,28 +22,51 @@ export const CartSidebar = () => {
 
   return (
     <>
-      {/* ✅ Cart button fixed to bottom-right */}
+      {/* 🛒 Single circular cart button with counter */}
       <button
-        className="btn-primary"
         onClick={() => setIsOpen(true)}
         style={{
           position: "fixed",
-          bottom: "80px", // Moved up to avoid covering content
-          right: "20px",
-          zIndex: 1000,
+          bottom: "100px", // lifted to avoid covering footer/contact
+          right: "25px",
+          zIndex: 999,
+          width: "60px",
+          height: "60px",
+          borderRadius: "50%",
           backgroundColor: "#C69C6D",
           color: "#fff",
+          fontSize: "24px",
           border: "none",
-          padding: "12px 20px",
-          borderRadius: "30px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
           cursor: "pointer",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
         }}
+        aria-label="Open cart"
       >
-        🛒 Cart ({cartItems.length})
+        🛒
+        {cartItems.length > 0 && (
+          <span
+            style={{
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+              background: "#ff4d4d",
+              color: "#fff",
+              borderRadius: "50%",
+              width: "20px",
+              height: "20px",
+              fontSize: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+            }}
+          >
+            {cartItems.length}
+          </span>
+        )}
       </button>
 
-      {/* ✅ Cart sidebar drawer */}
+      {/* 🧺 Sidebar Drawer */}
       {isOpen && (
         <aside
           style={{
@@ -158,6 +181,7 @@ export const CartSidebar = () => {
     </>
   );
 };
+
 
 
 
