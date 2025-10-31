@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Header } from "../components/Header";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -10,20 +11,22 @@ export default function Contact() {
     setStatus("sending");
 
     try {
-      const res = await fetch("/api/sendEmail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      await emailjs.send(
+        "service_ajgbzqr", // your EmailJS service ID
+        "template_rb1gaff", // your EmailJS template ID
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          to_email: "adoreluxuryshop@gmail.com",
+        },
+        "tF6RXKQCoerDYVvr3" // your public key
+      );
 
-      if (res.ok) {
-        setStatus("sent");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
+      setStatus("sent");
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error("Error sending message:", err);
+      console.error("EmailJS error:", err);
       setStatus("error");
     }
   };
@@ -81,3 +84,4 @@ export default function Contact() {
     </div>
   );
 }
+
