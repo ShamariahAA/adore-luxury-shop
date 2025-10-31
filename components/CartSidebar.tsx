@@ -21,27 +21,29 @@ export const CartSidebar = () => {
   };
 
   return (
-   <button
-  className="btn-primary"
-  onClick={() => setIsOpen(true)}
-  style={{
-    position: "fixed",
-    bottom: "80px", // ⬅️ moves button higher (was 20px)
-    right: "20px",
-    zIndex: 1000,
-    backgroundColor: "#C69C6D",
-    color: "#fff",
-    border: "none",
-    padding: "12px 20px",
-    borderRadius: "30px",
-    cursor: "pointer",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-  }}
->
-  🛒 Cart ({cartItems.length})
-</button>
+    <>
+      {/* ✅ Cart button fixed to bottom-right */}
+      <button
+        className="btn-primary"
+        onClick={() => setIsOpen(true)}
+        style={{
+          position: "fixed",
+          bottom: "80px", // Moved up to avoid covering content
+          right: "20px",
+          zIndex: 1000,
+          backgroundColor: "#C69C6D",
+          color: "#fff",
+          border: "none",
+          padding: "12px 20px",
+          borderRadius: "30px",
+          cursor: "pointer",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        }}
+      >
+        🛒 Cart ({cartItems.length})
+      </button>
 
-
+      {/* ✅ Cart sidebar drawer */}
       {isOpen && (
         <aside
           style={{
@@ -120,6 +122,7 @@ export const CartSidebar = () => {
                   </li>
                 ))}
               </ul>
+
               <button
                 onClick={handleCheckout}
                 style={{
@@ -155,5 +158,6 @@ export const CartSidebar = () => {
     </>
   );
 };
+
 
 
