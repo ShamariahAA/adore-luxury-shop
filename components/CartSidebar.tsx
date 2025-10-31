@@ -1,38 +1,10 @@
 import { useCart } from "../context/CartContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const CartSidebar = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const [showButton, setShowButton] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [animate, setAnimate] = useState(false);
 
-  // Hide/show cart button on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowButton(false);
-      } else {
-        setShowButton(true);
-      }
-      setLastScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  // Trigger animation when cart item count changes
-  useEffect(() => {
-    if (cartItems.length > 0) {
-      setAnimate(true);
-      const timeout = setTimeout(() => setAnimate(false), 600);
-      return () => clearTimeout(timeout);
-    }
-  }, [cartItems.length]);
-
-  // Handle checkout
   const handleCheckout = async () => {
     try {
       const response = await fetch("/api/checkout", {
@@ -40,13 +12,9 @@ export const CartSidebar = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems }),
       });
-
       const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Checkout failed.");
-      }
+      if (data.url) window.location.href = data.url;
+      else alert("Checkout failed.");
     } catch (error) {
       console.error("Error during checkout:", error);
     }
@@ -54,154 +22,139 @@ export const CartSidebar = () => {
 
   return (
     <>
-      {/* Floating Cart Button */}
-      {showButton && (
-        <button
-          onClick={() => setIsOpen(true)}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            zIndex: 300,
-            backgroundColor: "#000",
-            color: "#C69C6D",
-            border: "2px solid #C69C6D",
-            borderRadius: "30px",
-            padding: "0.6rem 1.2rem",
-            fontWeight: "bold",
-            transform: animate ? "scale(1.2)" : "scale(1)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          🛒 Cart ({cartItems.length})
-        </button>
-      )}
+      {/* ✅ Moved button to bottom-right and added safe spacing */}
+      <button
+        className="btn-primary"
+        onClick={() => setIsOpen(true)}
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1000,
+          backgroundColor: "#C69C6D",
+          color: "#fff",
+          border: "none",
+          padding: "12px 20px",
+          borderRadius: "30px",
+          cursor: "pointer",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        }}
+      >
+        🛒 Cart ({cartItems.length})
+      </button>
 
-      {/* Overlay (dim background) */}
       {isOpen && (
-        <div
-          onClick={() => setIsOpen(false)}
+        <aside
           style={{
             position: "fixed",
             top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.4)",
-            zIndex: 399,
-            transition: "opacity 0.3s ease",
-          }}
-        />
-      )}
-
-      {/* Animated Sidebar Drawer */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          right: isOpen ? 0 : "-320px",
-          width: "300px",
-          height: "100%",
-          backgroundColor: "#fff",
-          boxShadow: "-4px 0 10px rgba(0,0,0,0.2)",
-          padding: "1.5rem",
-          zIndex: 400,
-          overflowY: "auto",
-          transition: "right 0.4s ease",
-        }}
-      >
-        <button
-          onClick={() => setIsOpen(false)}
-          style={{
-            background: "none",
-            border: "none",
-            fontSize: "1.5rem",
-            position: "absolute",
-            top: 10,
-            right: 15,
-            cursor: "pointer",
+            right: 0,
+            width: "320px",
+            height: "100vh",
+            background: "#fff",
+            boxShadow: "-3px 0 10px rgba(0,0,0,0.2)",
+            padding: "20px",
+            zIndex: 1200,
+            overflowY: "auto",
           }}
         >
-          ✕
-        </button>
+          <button
+            onClick={() => setIsOpen(false)}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "20px",
+              cursor: "pointer",
+              color: "#C69C6D",
+              position: "absolute",
+              top: "10px",
+              right: "15px",
+            }}
+          >
+            ✕
+          </button>
 
-        <h2>Your Cart</h2>
-
-        {cartItems.length === 0 ? (
-          <p>No items in cart.</p>
-        ) : (
-          <>
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {cartItems.map((item, index) => (
-                <li
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "1rem",
-                    borderBottom: "1px solid #ddd",
-                    paddingBottom: "1rem",
-                  }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{ width: "60px", marginRight: "10px" }}
-                  />
-                  <div>
-                    <p style={{ margin: 0, fontWeight: "bold" }}>{item.name}</p>
-                    <p style={{ margin: "4px 0" }}>${item.price}</p>
-                    <p style={{ margin: "4px 0" }}>Qty: {item.quantity}</p>
-                    <button
-                      onClick={() => removeFromCart(item.name)}
+          <h2 style={{ color: "#C69C6D", marginTop: "40px" }}>Your Cart</h2>
+          {cartItems.length === 0 ? (
+            <p>No items in cart.</p>
+          ) : (
+            <>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {cartItems.map((item, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "15px",
+                      borderBottom: "1px solid #eee",
+                      paddingBottom: "10px",
+                    }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      width={60}
+                      height={60}
                       style={{
-                        background: "none",
-                        border: "none",
-                        color: "#C69C6D",
-                        cursor: "pointer",
-                        fontWeight: "bold",
+                        borderRadius: "8px",
+                        marginRight: "10px",
+                        objectFit: "cover",
                       }}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={handleCheckout}
-              style={{
-                backgroundColor: "#000",
-                color: "#C69C6D",
-                border: "none",
-                padding: "0.8rem",
-                width: "100%",
-                borderRadius: "5px",
-                fontWeight: "bold",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Proceed to Checkout
-            </button>
-            <button
-              onClick={clearCart}
-              style={{
-                backgroundColor: "#C69C6D",
-                color: "#000",
-                border: "none",
-                padding: "0.8rem",
-                width: "100%",
-                borderRadius: "5px",
-                fontWeight: "bold",
-              }}
-            >
-              Clear Cart
-            </button>
-          </>
-        )}
-      </div>
+                    />
+                    <div>
+                      <p style={{ fontWeight: "bold" }}>{item.name}</p>
+                      <p>${item.price}</p>
+                      <button
+                        onClick={() => removeFromCart(item.name)}
+                        style={{
+                          border: "none",
+                          background: "none",
+                          color: "#C69C6D",
+                          cursor: "pointer",
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={handleCheckout}
+                style={{
+                  backgroundColor: "#C69C6D",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  width: "100%",
+                  marginBottom: "10px",
+                }}
+              >
+                Proceed to Checkout
+              </button>
+              <button
+                onClick={clearCart}
+                style={{
+                  backgroundColor: "#eee",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  width: "100%",
+                }}
+              >
+                Clear Cart
+              </button>
+            </>
+          )}
+        </aside>
+      )}
     </>
   );
 };
+
 

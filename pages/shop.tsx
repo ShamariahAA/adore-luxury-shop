@@ -66,7 +66,8 @@ export default function Shop() {
             letterSpacing: "1px",
           }}
         >
-          Adore Plush Bonnets
+          <h2>Adoře Plush Bonnets</h2>
+
         </h2>
         <p style={{ textAlign: "center", color: "#555", marginBottom: "2rem" }}>
           Luxury handmade bonnets designed for elegance, comfort, and care.
