@@ -12,6 +12,7 @@ export const CartSidebar = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems }),
       });
+
       const data = await response.json();
       if (data.url) window.location.href = data.url;
       else alert("Checkout failed.");
@@ -22,49 +23,53 @@ export const CartSidebar = () => {
 
   return (
     <>
-      {/* 🛒 Single circular cart button with counter */}
-      <button
-        onClick={() => setIsOpen(true)}
+      {/* 🛒 Cart button directly under header */}
+      <div
         style={{
-          position: "fixed",
-          bottom: "100px", // lifted to avoid covering footer/contact
-          right: "25px",
-          zIndex: 999,
-          width: "60px",
-          height: "60px",
-          borderRadius: "50%",
-          backgroundColor: "#C69C6D",
-          color: "#fff",
-          fontSize: "24px",
-          border: "none",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-          cursor: "pointer",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "1rem",
+          marginBottom: "1rem",
         }}
-        aria-label="Open cart"
       >
-        🛒
-        {cartItems.length > 0 && (
-          <span
-            style={{
-              position: "absolute",
-              top: "5px",
-              right: "5px",
-              background: "#ff4d4d",
-              color: "#fff",
-              borderRadius: "50%",
-              width: "20px",
-              height: "20px",
-              fontSize: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: "bold",
-            }}
-          >
-            {cartItems.length}
-          </span>
-        )}
-      </button>
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            backgroundColor: "#C69C6D",
+            color: "#fff",
+            border: "none",
+            padding: "10px 25px",
+            borderRadius: "25px",
+            fontSize: "18px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            position: "relative",
+          }}
+        >
+          🛒 Cart
+          {cartItems.length > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: "-8px",
+                right: "-8px",
+                background: "#ff4d4d",
+                color: "#fff",
+                borderRadius: "50%",
+                width: "22px",
+                height: "22px",
+                fontSize: "13px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: "bold",
+              }}
+            >
+              {cartItems.length}
+            </span>
+          )}
+        </button>
+      </div>
 
       {/* 🧺 Sidebar Drawer */}
       {isOpen && (
@@ -181,6 +186,7 @@ export const CartSidebar = () => {
     </>
   );
 };
+
 
 
 
