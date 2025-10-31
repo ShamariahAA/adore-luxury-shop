@@ -21,27 +21,26 @@ export const CartSidebar = () => {
   };
 
   return (
-    <>
-      {/* ✅ Moved button to bottom-right and added safe spacing */}
-      <button
-        className="btn-primary"
-        onClick={() => setIsOpen(true)}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 1000,
-          backgroundColor: "#C69C6D",
-          color: "#fff",
-          border: "none",
-          padding: "12px 20px",
-          borderRadius: "30px",
-          cursor: "pointer",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-        }}
-      >
-        🛒 Cart ({cartItems.length})
-      </button>
+   <button
+  className="btn-primary"
+  onClick={() => setIsOpen(true)}
+  style={{
+    position: "fixed",
+    bottom: "80px", // ⬅️ moves button higher (was 20px)
+    right: "20px",
+    zIndex: 1000,
+    backgroundColor: "#C69C6D",
+    color: "#fff",
+    border: "none",
+    padding: "12px 20px",
+    borderRadius: "30px",
+    cursor: "pointer",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+  }}
+>
+  🛒 Cart ({cartItems.length})
+</button>
+
 
       {isOpen && (
         <aside
