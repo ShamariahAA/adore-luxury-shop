@@ -1,6 +1,7 @@
-import { useCart } from '../context/CartContext';
-import { CartSidebar } from '../components/CartSidebar';
-import { Header } from '../components/Header'; // ✅ Added header import
+import { useCart } from "../context/CartContext";
+import { CartSidebar } from "../components/CartSidebar";
+import { Header } from "../components/Header";
+import { useState } from "react";
 
 interface Product {
   name: string;
@@ -17,7 +18,7 @@ const products: Product[] = [
     image: "https://image2url.com/images/1761763134814-819d1200-1dd9-4a9d-b58d-a926df5ff20b.jpg",
   },
   {
-    name: "Caramel Fluffy Bonnet",
+    name: "Teddy Bear Fluffy Bonnet",
     price: 25,
     desc: "Wrap yourself in warmth and grace. Plush caramel teddy texture with silky blush-pink satin lining.",
     image: "https://image2url.com/images/1761761637780-a510e53e-a555-44d1-823f-cacdc8d8cbb4.jpg",
@@ -38,26 +39,109 @@ const products: Product[] = [
 
 export default function Shop() {
   const { addToCart } = useCart();
+  const [clickedItem, setClickedItem] = useState<string | null>(null);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({ ...product, quantity: 1 });
+    setClickedItem(product.name);
+    setTimeout(() => setClickedItem(null), 600); // remove bounce after 0.6s
+  };
 
   return (
     <div>
-      <Header /> {/* ✅ Navigation bar now appears */}
-      <CartSidebar />
-      
-      <section className="shop">
-        <h2>Our Plush Bonnets</h2>
-        <div className="products-grid">
+      <Header />
+      {/* ✅ Moved Cart button down slightly so it doesn't overlap content */}
+      <div style={{ position: "relative", zIndex: 200 }}>
+        <CartSidebar />
+      </div>
+
+      <section className="shop" style={{ padding: "2rem", marginTop: "2rem" }}>
+        <h2
+          style={{
+            fontSize: "2.5rem",
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "1rem",
+            color: "#C69C6D",
+            letterSpacing: "1px",
+          }}
+        >
+          Adore Plush Bonnets
+        </h2>
+        <p style={{ textAlign: "center", color: "#555", marginBottom: "2rem" }}>
+          Luxury handmade bonnets designed for elegance, comfort, and care.
+        </p>
+
+        <div
+          className="products-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "2rem",
+          }}
+        >
           {products.map((product) => (
-            <div className="product-card" key={product.name}>
-              <img src={product.image} alt={product.name} className="product-image" />
-              <div className="product-name">{product.name}</div>
-              <div className="product-desc">{product.desc}</div>
-              <div className="product-price">${product.price}</div>
-              <button
-                className="btn-add-cart"
-                onClick={() => addToCart({ ...product, quantity: 1 })}
+            <div
+              key={product.name}
+              className="product-card"
+              style={{
+                border: "1px solid #eee",
+                borderRadius: "1rem",
+                padding: "1rem",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+                textAlign: "center",
+                backgroundColor: "#fff",
+                position: "relative",
+                overflow: "hidden",
+                transform:
+                  clickedItem === product.name ? "scale(1.05)" : "scale(1)",
+                transition: "transform 0.3s ease",
+              }}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover",
+                  borderRadius: "0.75rem",
+                  marginBottom: "1rem",
+                }}
+              />
+              <h3 style={{ fontSize: "1.2rem", fontWeight: "600" }}>
+                {product.name}
+              </h3>
+              <p style={{ color: "#777", margin: "0.5rem 0" }}>{product.desc}</p>
+              <div
+                style={{
+                  fontSize: "1.1rem",
+                  color: "#C69C6D",
+                  marginBottom: "1rem",
+                }}
               >
-                Add to Cart
+                ${product.price}
+              </div>
+              <button
+                onClick={() => handleAddToCart(product)}
+                style={{
+                  backgroundColor: "#C69C6D",
+                  color: "#fff",
+                  border: "none",
+                  padding: "0.75rem 1.5rem",
+                  borderRadius: "0.5rem",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#b48a5d")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#C69C6D")
+                }
+              >
+                {clickedItem === product.name ? "Added!" : "Add to Cart"}
               </button>
             </div>
           ))}
@@ -66,3 +150,5 @@ export default function Shop() {
     </div>
   );
 }
+
+
